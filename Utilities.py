@@ -9,6 +9,9 @@ import os
 import pandas as pd
 import re
 import time
+import nltk
+from nltk.corpus import wordnet
+from nltk.stem import WordNetLemmatizer
 
 def SetDir(Dir):
     print("The default directory is: ", os.getcwd())
@@ -59,4 +62,17 @@ def ReadTXT(TXTfile):
     temp=pd.read_csv(TXTfile, delimiter="\n", header= None)
     return list(temp[0])
 
+def get_wordnet_pos(word):
+    """Map POS tag to first character lemmatize() accepts"""
+    tag = nltk.pos_tag([word])[0][1][0].upper()
+    tag_dict = {"J": wordnet.ADJ,
+                "N": wordnet.NOUN,
+                "V": wordnet.VERB,
+                "R": wordnet.ADV}
+    return tag_dict.get(tag, wordnet.NOUN) #if not in the dictionary, return NOUN (regard it as noun)
 
+lemmatizer= WordNetLemmatizer()
+def Lemmatizer(DataList):
+    """Lemmatizing each sentence in the list"""
+    for sen in DataList:
+        yield ' '.join([lemmatizer.lemmatize(w, get_wordnet_pos(w)) for w in nltk.word_tokenize(sen)])
