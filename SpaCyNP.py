@@ -40,7 +40,11 @@ def RemoveSecondaryStopWords(DataList):
         yield temp1
     print("Removing secondary stop words in the list...\n")
 
-
+def RemoveEmptyString(DataList):
+    """Removing empty strings (i.e., '') in the nested list"""
+    for item in DataList:
+        yield [it for it in item if it is not '']
+    print("Removing empty strings in the nested list")
 
 #connect words in a phrase with underscores
 def ConnectWords(DataList):
