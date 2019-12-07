@@ -44,7 +44,13 @@ def RemoveEmptyString(DataList):
     """Removing empty strings (i.e., '') in the nested list"""
     for item in DataList:
         yield [it for it in item if it is not '']
-    print("Removing empty strings in the nested list")
+    print("Removing empty strings in the nested list...")
+
+def RemoveOneLetterWord(DataList):
+    """Remove one letter word (e.g. 's') or empty string (i.e., '') from the nested list"""
+    for item in DataList:
+        yield [it for it in item if len(it)>1]
+    print("removing one letter words from the nested list...")
 
 #connect words in a phrase with underscores
 def ConnectWords(DataList):
@@ -61,3 +67,16 @@ def WordCounter(WordList, topN):
     word_counter=collections.Counter(WordList)
     print(word_counter.most_common(topN))
     return word_counter
+
+def RemoveEmptyList(DataList):
+    """Remove empty list (i.e. []) in the nested list"""
+    for item in DataList:
+        if len(item):
+            yield item
+    print("Removing empty lists in the nested list...")
+
+Job_posting_stop_words= ['experience','ability','work','skill','knowledge','strong','provide','include','application','understand','excellent','ensure','need','new','demonstrate','employee','employer','resume','find','let','appropriate','job','able','opportunity','effective','professional','team','development','support','procedure','project','problem','client','management','system','customer','process','solution','organization','familiarity','implementation','people','level','time','service','business','technology']
+def RemoveCustomizedStopWords(DataList):
+    for item in DataList:
+        yield [it for it in item if not (it in Job_posting_stop_words)]
+    print("Removing additional customized stop words from the nested list...")
